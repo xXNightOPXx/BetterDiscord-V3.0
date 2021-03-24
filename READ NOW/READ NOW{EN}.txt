@@ -1,0 +1,52 @@
+If installed already read these steps
+
+
+Before Installing make sure you have the console already set up on your computer
+
+Step 2
+Make sure this folder is Public to the desktop
+
+Step 3
+After double clicking on the .EXE File it will open the console. and install it to this folder.
+
+Step 4 
+Once done you open the file.
+
+Step 5 
+Open Discord and go to the settings were better discord is installed
+
+Step 6
+ then go back to the folder and click on plugins or themes and just trasnfer them over
+
+Step 7 
+
+All done
+
+
+If Better discord is not installed
+
+
+
+Step 2
+Make sure this folder is Public to the desktop
+
+Step 3
+After double clicking on the .EXE File it will open the console. and install it to this folder.
+
+Step 4 
+Once done you open the file.
+
+Step 5 
+Open The folder called Install if on windows or mac pick on your system
+
+Step 6
+click on the .exe it will open your browser 
+
+Step 7 
+click install new verison 
+
+Step 8 
+it will open and click install in the better discord application 
+
+Step 9 
+Your all good and now go to the top of the Read me Note
