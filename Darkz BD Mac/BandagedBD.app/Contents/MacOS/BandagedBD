@@ -1,0 +1,86 @@
+#!/bin/bash
+
+echo "BandagedBD Installer"
+
+cd `dirname "$0"`/../Resources/
+
+if [ -d /Applications/Discord.app ]; then
+    echo "Hijacking Discord's electron."
+    TOPLoc=/Applications/Discord.app
+
+elif [ -d /Applications/Discord\ PTB.app ]; then
+    echo "Hijacking Discord PTB's electron."
+    TOPLoc=/Applications/Discord\ PTB.app
+
+elif [ -d /Applications/Discord\ Canary.app ]; then
+    echo "Hijacking Discord Canary's electron."
+    TOPLoc=/Applications/Discord\ Canary.app
+
+elif [ -d ~/Applications/Discord.app ]; then
+    echo "Hijacking ~ Discord's electron."
+    TOPLoc=~/Applications/Discord.app
+
+elif [ -d ~/Applications/Discord\ PTB.app ]; then
+    echo "Hijacking ~ Discord PTB's electron."
+    TOPLoc=~/Applications/Discord\ PTB.app
+
+elif [ -d ~/Applications/Discord\ Canary.app ]; then
+    echo "Hijacking ~ Discord Canary's electron."
+    TOPLoc=~/Applications/Discord\ Canary.app
+
+elif [ -d ~/Desktop/Discord.app ]; then
+    echo "Hijacking ~/Desktop Discord's electron."
+    TOPLoc=~/Desktop/Discord.app
+
+elif [ -d ~/Desktop/Discord\ PTB.app ]; then
+    echo "Hijacking ~/Desktop Discord PTB's electron."
+    TOPLoc=~/Desktop/Discord\ PTB.app
+
+elif [ -d ~/Desktop/Discord\ Canary.app ]; then
+    echo "Hijacking ~/Desktop Discord Canary's electron."
+    TOPLoc=~/Desktop/Discord\ Canary.app
+
+else
+    GETDiscord=`osascript -e '
+        display dialog "Discord does not seem to be installed on your system." buttons {"Get Discord", "Cancel"}
+        if button returned of result is "Get Discord" then
+            return true
+        end if
+    '`
+    if [ $GETDiscord ]; then
+        open https://discord.com/download
+    fi
+    exit 1
+fi
+
+APPLoc="$TOPLoc/Contents/Resources/app"
+EXELoc="$TOPLoc/Contents/MacOS/Discord"
+
+chown -R `whoami` "$TOPLoc"
+chmod +rw "$APPLoc"
+
+if [ -d "$APPLoc" ] || [ -L "$APPLoc" ]; then
+    if mv "$APPLoc" "`dirname "$APPLoc"`/app-tmp-rename"; then
+        echo "Moved existing app folder out of the way."
+    else
+        osascript -e 'display dialog "The installer encountered an error while starting!\nA potential solution is to delete and reinstall Discord." buttons {"Ok"}'
+        exit 1
+    fi
+fi
+
+INSTALLERPATH=`dirname "$0"`/../Resources/Installer
+
+if ! [ -d "$INSTALLERPATH" ]; then
+    echo "Uh oh, missing installer files?"
+    osascript -e 'display dialog "Missing installer files.\nPlease redownload installer." buttons {"Ok"}'
+    exit 1
+fi
+
+if ln -s "$INSTALLERPATH" "$APPLoc"; then
+    echo "Hijack successful!"
+    "$EXELoc" "$APPLoc"
+else
+    echo "Hijack failed! (Failed to create symlink)";
+    osascript -e 'display dialog "The installer encountered an error while starting!\nA potential solution is to delete and reinstall Discord." buttons {"Ok"}'
+    exit 1
+fi
